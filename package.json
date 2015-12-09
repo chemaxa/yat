@@ -1,0 +1,23 @@
+{
+    "name": "Yet",
+    "version": "1.0.0",
+    "description": "Yet another todo",
+    "main": "index.html",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/chemaxa/yat"
+    },
+    "dependencies": {
+        "gulp": "^3.9.0"
+    },
+    "devDependencies": {
+        "browser-sync": "^2.7.6",
+        "gulp-nodemon": "^2.0.4",
+        "gulp-sass": "^2.0.1"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Chemaxa",
+    "license": "ISC"
+}
