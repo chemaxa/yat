@@ -5,16 +5,48 @@
     <meta charset="UTF-8">
     <title>Yet another TODO</title>
     <!-- Latest compiled and minified Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/libs/bootstrap.min.css">
     <!-- Main CSS-->
     <link rel="stylesheet" href="css/main.css">
+    <!-- jQuery -->
+    <script src="js/libs/jquery-2.1.4.min.js"></script>
+    <!-- Bootstrap Datepicker -->
+    <link rel="stylesheet" href="css/libs/bootstrap-datepicker.min.css">
+    <script src="js/libs/bootstrap-datepicker.min.js"></script>
     <!-- AngularJs -->
     <script src="js/libs/angular.min.js"></script>
+    <!-- Main Js -->
+    <script src="js/main.js"></script>
+    <!-- App -->
     <script src="js/app.js"></script>
 </head>
 
-<body>
-    <h1>Yet another Todo</h1>
+<body ng-app="yat">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" ng-controller="TodoController">
+                <div class="list-group">
+                    {{todoList}}
+                    <a href="#" class="list-group-item" ng-repeat="todo in todoList">
+                        <h4 class="list-group-item-heading">{{todo.name}}</h4>
+                        <p class="list-group-item-text">{{todo.description}}</p>
+                        <span class="label label-default">{{todo.date}}</span>
+                    </a>
+                </div>
+                <form ng-submit="addTodoForm.$valid && addTodo(todo)" name="addTodoForm" novalidate ng-controller="FormController">
+                    <div class="form-group">
+                        <label> Name</label>
+                        <input type="text" class="form-control" ng-model="todo.name" placeholder="Name" required>
+                        <label>Description</label>
+                        <textarea class="form-control" ng-model="todo.description" placeholder="Description" required></textarea>
+                        <label> Date</label>
+                        <input type="text" class="form-control" ng-model="todo.date" placeholder="Date" id="datepicker" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

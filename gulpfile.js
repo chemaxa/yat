@@ -37,6 +37,7 @@ gulp.task('demon', function() {
 
 // Watch Task
 gulp.task('watch', ['sass', 'server'], function() {
+    gulp.watch("js/app.js").on("change", browserSync.reload);
     gulp.watch("*.html").on("change", browserSync.reload);
     gulp.watch([params.sassSrc + '/*.sass'], ['sass']);
 });
