@@ -23,28 +23,29 @@
 
 <body ng-app="yat">
     <div class="container">
-        <div class="row">
-            <div class="col-md-12" ng-controller="TodoController">
+        <div class="row" ng-controller="MainController as main">
+            <div class="col-md-8">
                 <div class="list-group">
-                    {{todoList}}
-                    <a href="#" class="list-group-item" ng-repeat="todo in todoList">
+                    <a href="#" class="list-group-item" ng-class="{active:todo.active}" ng-click="main.toggleActiveTodo(todo)" ng-show="todo.name" ng-repeat="todo in main.todoList track by $index">
+                        <button type="button" class="close" aria-label="Close" ng-click="main.deleteTodo(todo)"><span aria-hidden="true">&times;</span></button>
                         <h4 class="list-group-item-heading">{{todo.name}}</h4>
                         <p class="list-group-item-text">{{todo.description}}</p>
                         <span class="label label-default">{{todo.date}}</span>
                     </a>
                 </div>
-                <form ng-submit="addTodoForm.$valid && addTodo(todo)" name="addTodoForm" novalidate ng-controller="FormController">
+                <form ng-submit="addTodoForm.$valid && main.addTodo(main.todo)" name="addTodoForm" novalidate>
                     <div class="form-group">
                         <label> Name</label>
-                        <input type="text" class="form-control" ng-model="todo.name" placeholder="Name" required>
+                        <input type="text" class="form-control" ng-model="main.todo.name" placeholder="Name" required>
                         <label>Description</label>
-                        <textarea class="form-control" ng-model="todo.description" placeholder="Description" required></textarea>
+                        <textarea class="form-control" ng-model="main.todo.description" placeholder="Description" required></textarea>
                         <label> Date</label>
-                        <input type="text" class="form-control" ng-model="todo.date" placeholder="Date" id="datepicker" required>
+                        <input type="text" class="form-control" ng-model="main.todo.date" placeholder="Date" id="datepicker" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
+            <div class="col-md-4"><pre>{{main.todoList}}</pre></div>
         </div>
     </div>
 </body>
