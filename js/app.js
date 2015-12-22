@@ -7,20 +7,20 @@
             id: 2,
             name: 'First Todo',
             description: 'Start with Angular',
-            date: '11.12.2015',
-            active: true
+            date: new Date(2015, 2, 1, 0, 0, 0, 0),
+            completed: true
         }, {
             id: 1,
             name: 'Second Todo',
             description: 'Lets go controller with Angular',
-            date: '12.12.2015',
-            active: false
+            date: new Date(2015, 1, 1, 0, 0, 0, 0),
+            completed: false
         }, {
             id: 3,
             name: 'Third Todo',
             description: 'Testing with Angular',
-            date: '13.12.2015',
-            active: true
+            date: new Date(2015, 0, 1, 0, 0, 0, 0),
+            completed: true
         }, ];
 
     });
@@ -30,15 +30,18 @@
         main.todoList = TodoModel.todoList;
 
         main.addTodo = function(todo) {
-            todo.active = true;
+            todo.completed = false;
             todo.id = TodoModel.todoList.slice(-1)[0].id + 1;
+            var yyyy = todo.date.split('.')[2],
+                mm = todo.date.split('.')[1],
+                dd = todo.date.split('.')[0];
 
+            todo.date = new Date(yyyy, mm - 1, dd, 0, 0, 0, 0);
             TodoModel.todoList.push(todo);
             main.todo = {};
             console.log('Добавили ', TodoModel.todoList);
         };
         main.deleteTodo = function(todo) {
-            console.log('Удаляем ', todo);
             TodoModel.todoList.forEach(function(item, i) {
                 if (item.id === todo.id) {
                     console.log('Удаляем ', TodoModel.todoList[i]);
@@ -47,9 +50,10 @@
             });
             console.log('Удалили ', TodoModel.todoList);
         };
-        main.toggleActiveTodo = function(todo) {
+        main.toggleCompletedTodo = function(todo) {
+            console.log(todo);
             if (todo)
-                todo.active = (todo.active) ? false : true;
+                todo.completed = (todo.completed) ? false : true;
         };
     });
 

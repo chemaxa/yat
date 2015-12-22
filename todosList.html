@@ -1,8 +1,9 @@
 <div class="list-group">
-    <a href="#" class="list-group-item" ng-class="{active:todo.active}" ng-click="main.toggleActiveTodo(todo)" ng-show="todo.name" ng-repeat="todo in main.todoList track by $index">
+    <a href="#" class="list-group-item" ng-class="{active:!todo.completed}" ng-show="todo.name" ng-repeat="todo in main.todoList | orderBy:'-date' track by $index">
         <button type="button" class="close" aria-label="Close" ng-click="main.deleteTodo(todo)"><span aria-hidden="true">&times;</span></button>
         <h4 class="list-group-item-heading">{{todo.name}}</h4>
         <p class="list-group-item-text">{{todo.description}}</p>
         <span class="label label-default">{{todo.date}}</span>
+        <button type="button" class="btn btn-info" ng-click="main.toggleCompletedTodo(todo)">Set {{todo.completed ? 'completed' : 'uncompleted'}}</button>
     </a>
 </div>
