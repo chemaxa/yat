@@ -52,4 +52,13 @@
                 todo.active = (todo.active) ? false : true;
         };
     });
+
+    app.directive('todoslist', function() {
+        return {
+            restrict: 'E',
+            controller: 'MainController',
+            controllerAs: 'main',
+            templateUrl: 'todosList.html'
+        };
+    });
 })();
