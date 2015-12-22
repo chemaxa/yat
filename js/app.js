@@ -31,12 +31,15 @@
 
         main.addTodo = function(todo) {
             todo.completed = false;
-            todo.id = TodoModel.todoList.slice(-1)[0].id + 1;
+            //Get last element Id & increment it
+            todo.id = (TodoModel.todoList.slice(-1)[0]) ? TodoModel.todoList.slice(-1)[0].id + 1 : 0;
+
             var yyyy = todo.date.split('.')[2],
                 mm = todo.date.split('.')[1],
                 dd = todo.date.split('.')[0];
 
             todo.date = new Date(yyyy, mm - 1, dd, 0, 0, 0, 0);
+
             TodoModel.todoList.push(todo);
             main.todo = {};
             console.log('Добавили ', TodoModel.todoList);
