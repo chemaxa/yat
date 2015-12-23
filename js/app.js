@@ -29,6 +29,9 @@
         var main = this;
         main.todoList = TodoModel.todoList;
 
+        main.predicate = 'date';
+        main.reverse = false;
+
         main.addTodo = function(todo) {
             todo.completed = false;
             //Get last element Id & increment it
@@ -57,6 +60,12 @@
             console.log(todo);
             if (todo)
                 todo.completed = (todo.completed) ? false : true;
+        };
+
+        main.order = function(predicate) {
+            main.reverse = (main.predicate === predicate) ? !main.reverse : false;
+            main.predicate = predicate;
+            console.log(main)
         };
     });
 

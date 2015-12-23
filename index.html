@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="css/main.css">
     <!-- jQuery -->
     <script src="js/libs/jquery-2.1.4.min.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="js/libs/bootstrap.min.js"></script>
     <!-- Bootstrap Datepicker -->
     <link rel="stylesheet" href="css/libs/bootstrap-datepicker.min.css">
     <script src="js/libs/bootstrap-datepicker.min.js"></script>
@@ -22,23 +24,58 @@
 </head>
 
 <body ng-app="yat">
-    <div class="container">
-        <div class="row" ng-controller="MainController as main">
-            <div class="col-md-8">
-                <todosList></todosList>
-                <form ng-submit="addTodoForm.$valid && main.addTodo(main.todo)" name="addTodoForm" novalidate>
-                    <div class="form-group">
-                        <label> Name</label>
-                        <input type="text" class="form-control" ng-model="main.todo.name" placeholder="Name" required>
-                        <label>Description</label>
-                        <textarea class="form-control" ng-model="main.todo.description" placeholder="Description" required></textarea>
-                        <label> Date</label>
-                        <input type="text" class="form-control" ng-model="main.todo.date" placeholder="Date" id="datepicker" required>
+    <div class="page__wrapper">
+        <div class="container">
+            <div class="row" ng-controller="MainController as main">
+                <div class="col-md-8">
+                    <todosList></todosList>
+                    <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="main.order('name')">
+                        <span>Sort by Name</span>
+                        <span class="glyphicon glyphicon-sort-by-alphabet" ng-class="{'glyphicon-sort-by-alphabet': !main.reverse, 'glyphicon-sort-by-alphabet-alt': main.reverse}" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="main.order('date')">
+                        <span>Sort by Date</span>
+                        <span class="glyphicon glyphicon-sort-by-order" ng-class="{'glyphicon-sort-by-order': !main.reverse, 'glyphicon-sort-by-order-alt': main.reverse}" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="main.order('completed')">
+                        <span>Sort by Status</span>
+                        <span class="glyphicon glyphicon-sort-by-attributes" ng-class="{'glyphicon-sort-by-attributes': !main.reverse, 'glyphicon-sort-by-attributes-alt': main.reverse}" aria-hidden="true"></span>
+                    </button>
+                    <div class="button__wrapper">
+                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addTodoForm">
+                            Add new Todo
+                        </button>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+                    <!-- Modal -->
+                    <div class="modal fade" id="addTodoForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <form ng-submit="addTodoForm.$valid && main.addTodo(main.todo)" name="addTodoForm" novalidate>
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabel"> Add new Todo</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label> Name</label>
+                                            <input type="text" class="form-control" ng-model="main.todo.name" placeholder="Name" required>
+                                            <label>Description</label>
+                                            <textarea class="form-control" ng-model="main.todo.description" placeholder="Description" required></textarea>
+                                            <label> Date</label>
+                                            <input type="text" class="form-control" ng-model="main.todo.date" placeholder="Date" id="datepicker" required>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4"><pre>{{main.todoList}}</pre></div>
             </div>
-            <div class="col-md-4"><pre>{{main.todoList}}</pre></div>
         </div>
     </div>
 </body>
