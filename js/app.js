@@ -47,6 +47,7 @@
             main.todo = {};
             console.log('Добавили ', TodoModel.todoList);
         };
+
         main.deleteTodo = function(todo) {
             TodoModel.todoList.forEach(function(item, i) {
                 if (item.id === todo.id) {
@@ -56,6 +57,7 @@
             });
             console.log('Удалили ', TodoModel.todoList);
         };
+
         main.toggleCompletedTodo = function(todo) {
             console.log(todo);
             if (todo)
@@ -82,6 +84,7 @@
             templateUrl: 'todosList.html'
         };
     });
+
     app.directive('addtodoform', function() {
         function link() {
             $('#datepicker').datepicker({
