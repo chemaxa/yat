@@ -25,7 +25,7 @@
 
     });
 
-    app.controller('MainController', function(TodoModel) {
+    app.controller('MainController', function(TodoModel, $filter) {
         var main = this;
         main.todoList = TodoModel.todoList;
 
@@ -78,7 +78,8 @@
         main.editTodo = function(todo) {
             $('#addTodoForm').modal();
             main.todo = todo;
-            main.todo.date = Date.parse(todo.date);
+
+            main.todo.date = $filter('date')(todo.date, "dd.MM.yyyy");
             console.log(todo);
         };
     });
