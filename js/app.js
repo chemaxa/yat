@@ -65,8 +65,13 @@
         main.order = function(predicate) {
             main.reverse = (main.predicate === predicate) ? !main.reverse : false;
             main.predicate = predicate;
-            console.log(main)
+            console.log(main);
         };
+
+        main.isSortBy = function(predicate) {
+            return (!main.reverse && main.predicate == predicate);
+        };
+
     });
 
     app.directive('todoslist', function() {
@@ -75,6 +80,20 @@
             controller: 'MainController',
             controllerAs: 'main',
             templateUrl: 'todosList.html'
+        };
+    });
+    app.directive('addtodoform', function() {
+        function link() {
+            $('#datepicker').datepicker({
+                format: 'dd.mm.yyyy'
+            });
+        };
+        return {
+            restrict: 'E',
+            controller: 'MainController',
+            controllerAs: 'main',
+            link: link,
+            templateUrl: 'addTodoForm.html',
         };
     });
 })();

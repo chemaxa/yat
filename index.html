@@ -31,15 +31,15 @@
                     <todosList></todosList>
                     <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="main.order('name')">
                         <span>Sort by Name</span>
-                        <span class="glyphicon glyphicon-sort-by-alphabet" ng-class="{'glyphicon-sort-by-alphabet': !main.reverse, 'glyphicon-sort-by-alphabet-alt': main.reverse}" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-sort-by-alphabet" ng-class="main.isSortBy('name') ? 'glyphicon-sort-by-alphabet': 'glyphicon-sort-by-alphabet-alt'" aria-hidden="true"></span>
                     </button>
                     <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="main.order('date')">
                         <span>Sort by Date</span>
-                        <span class="glyphicon glyphicon-sort-by-order" ng-class="{'glyphicon-sort-by-order': !main.reverse, 'glyphicon-sort-by-order-alt': main.reverse}" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-sort-by-order" ng-class="main.isSortBy('date') ? 'glyphicon-sort-by-order' : 'glyphicon-sort-by-order-alt'" aria-hidden="true"></span>
                     </button>
                     <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="main.order('completed')">
                         <span>Sort by Status</span>
-                        <span class="glyphicon glyphicon-sort-by-attributes" ng-class="{'glyphicon-sort-by-attributes': !main.reverse, 'glyphicon-sort-by-attributes-alt': main.reverse}" aria-hidden="true"></span>
+                        <span class="glyphicon glyphicon-sort-by-attributes" ng-class="main.isSortBy('completed') ? 'glyphicon-sort-by-attributes': 'glyphicon-sort-by-attributes-alt'" aria-hidden="true"></span>
                     </button>
                     <div class="button__wrapper">
                         <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addTodoForm">
@@ -47,32 +47,7 @@
                         </button>
                     </div>
                     <!-- Modal -->
-                    <div class="modal fade" id="addTodoForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <form ng-submit="addTodoForm.$valid && main.addTodo(main.todo)" name="addTodoForm" novalidate>
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="myModalLabel"> Add new Todo</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label> Name</label>
-                                            <input type="text" class="form-control" ng-model="main.todo.name" placeholder="Name" required>
-                                            <label>Description</label>
-                                            <textarea class="form-control" ng-model="main.todo.description" placeholder="Description" required></textarea>
-                                            <label> Date</label>
-                                            <input type="text" class="form-control" ng-model="main.todo.date" placeholder="Date" id="datepicker" required>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+                    <addtodoform></addtodoform>
                 </div>
                 <div class="col-md-4"><pre>{{main.todoList}}</pre></div>
             </div>
