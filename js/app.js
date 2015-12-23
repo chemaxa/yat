@@ -32,6 +32,8 @@
         main.predicate = 'date';
         main.reverse = false;
 
+
+
         main.addTodo = function(todo) {
             todo.completed = false;
             //Get last element Id & increment it
@@ -73,7 +75,12 @@
         main.isSortBy = function(predicate) {
             return (!main.reverse && main.predicate == predicate);
         };
-
+        main.editTodo = function(todo) {
+            $('#addTodoForm').modal();
+            main.todo = todo;
+            main.todo.date = Date.parse(todo.date);
+            console.log(todo);
+        };
     });
 
     app.directive('todoslist', function() {
