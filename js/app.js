@@ -34,7 +34,7 @@
 
 
 
-        main.addTodo = function(todo) {
+        main.createTodo = function(todo) {
             todo.completed = false;
             //Get last element Id & increment it
             todo.id = (TodoModel.todoList.slice(-1)[0]) ? TodoModel.todoList.slice(-1)[0].id + 1 : 0;
@@ -60,6 +60,15 @@
             console.log('Удалили ', TodoModel.todoList);
         };
 
+        main.readTodo = function(todo) {
+            main.todo = todo;
+            main.todo.date = $filter('date')(todo.date, "dd.MM.yyyy");
+        };
+
+        main.updateTodo = function(todo) {
+            main.todo = {};
+        };
+
         main.toggleCompletedTodo = function(todo) {
             console.log(todo);
             if (todo)
@@ -75,13 +84,7 @@
         main.isSortBy = function(predicate) {
             return (!main.reverse && main.predicate == predicate);
         };
-        main.editTodo = function(todo) {
-            $('#addTodoForm').modal();
-            main.todo = todo;
 
-            main.todo.date = $filter('date')(todo.date, "dd.MM.yyyy");
-            console.log(todo);
-        };
     });
 
     app.directive('todoslist', function() {
@@ -93,7 +96,7 @@
         };
     });
 
-    app.directive('addtodoform', function() {
+    app.directive('updatetodoform', function() {
         function link() {
             $('#datepicker').datepicker({
                 format: 'dd.mm.yyyy'
@@ -104,7 +107,22 @@
             controller: 'MainController',
             controllerAs: 'main',
             link: link,
-            templateUrl: 'addTodoForm.html',
+            templateUrl: 'updateTodoForm.html',
+        };
+    });
+
+    app.directive('createtodoform', function() {
+        function link() {
+            $('#datepicker').datepicker({
+                format: 'dd.mm.yyyy'
+            });
+        };
+        return {
+            restrict: 'E',
+            controller: 'MainController',
+            controllerAs: 'main',
+            link: link,
+            templateUrl: 'createTodoForm.html',
         };
     });
 })();

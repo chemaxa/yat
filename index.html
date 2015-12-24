@@ -42,12 +42,26 @@
                         <span class="glyphicon glyphicon-sort-by-attributes" ng-class="main.isSortBy('completed') ? 'glyphicon-sort-by-attributes': 'glyphicon-sort-by-attributes-alt'" aria-hidden="true"></span>
                     </button>
                     <div class="button__wrapper">
-                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addTodoForm">
+                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#createTodoForm">
                             Add new Todo
                         </button>
                     </div>
                     <!-- Modal -->
-                    <addtodoform></addtodoform>
+                    <div class="modal fade" id="createTodoForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <createtodoform></createtodoform>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="updateTodoForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <updatetodoform></updatetodoform>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-4"><pre>{{main.todoList}}</pre></div>
             </div>
