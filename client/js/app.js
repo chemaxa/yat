@@ -32,7 +32,14 @@
         main.predicate = 'date';
         main.reverse = false;
 
-
+        main.openCreateTodoForm = function() {
+            main.todo = {};
+            $('#createTodoForm').modal();
+        };
+        main.closeCreateTodoForm = function(todo) {
+            $('#createTodoForm').modal('hide');
+            main.createTodo(todo);
+        };
 
         main.createTodo = function(todo) {
             todo.completed = false;
@@ -47,7 +54,6 @@
 
             TodoModel.todoList.push(todo);
             main.todo = {};
-            console.log('Добавили ', TodoModel.todoList);
         };
 
         main.deleteTodo = function(todo) {
@@ -57,7 +63,6 @@
                     delete TodoModel.todoList[i];
                 }
             });
-            console.log('Удалили ', TodoModel.todoList);
         };
 
         main.readTodo = function(todo) {
@@ -65,8 +70,14 @@
             main.todo.date = $filter('date')(todo.date, "dd.MM.yyyy");
         };
 
-        main.updateTodo = function(todo) {
+        main.openUpdateTodoForm = function(todo) {
+            $('#updateTodoForm').modal();
+            main.readTodo(todo);
+        };
+
+        main.closeUpdateTodoForm = function(todo) {
             main.todo = {};
+            $('#updateTodoForm').modal('hide');
         };
 
         main.toggleCompletedTodo = function(todo) {
@@ -101,7 +112,7 @@
             $('#datepicker').datepicker({
                 format: 'dd.mm.yyyy'
             });
-        };
+        }
         return {
             restrict: 'E',
             controller: 'MainController',
@@ -116,7 +127,7 @@
             $('#datepicker').datepicker({
                 format: 'dd.mm.yyyy'
             });
-        };
+        }
         return {
             restrict: 'E',
             controller: 'MainController',

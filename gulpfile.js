@@ -5,11 +5,13 @@ var gulp = require('gulp'),
     reload = browserSync.reload;
 
 // Params
+var buildDst = ['client', '.'];
 var params = {
-    currentFile: 'index',
-    sassSrc: 'sass',
-    cssDst: 'css',
-    buildDst: ['build', '.']
+    currentFile: buildDst[0] + '/index',
+    sassSrc: buildDst[0] + '/sass',
+    cssDst: buildDst[0] + '/css',
+    jsSrc: buildDst[0] + '/js',
+    buildDst: buildDst
 };
 
 // Default Task
@@ -37,8 +39,8 @@ gulp.task('demon', function() {
 
 // Watch Task
 gulp.task('watch', ['sass', 'server'], function() {
-    gulp.watch("js/app.js").on("change", browserSync.reload);
-    gulp.watch("*.html").on("change", browserSync.reload);
+    gulp.watch(buildDst[0] + "/js/app.js").on("change", browserSync.reload);
+    gulp.watch(buildDst[0] + "/*.html").on("change", browserSync.reload);
     gulp.watch([params.sassSrc + '/*.sass'], ['sass']);
 });
 
