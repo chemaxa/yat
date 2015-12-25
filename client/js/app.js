@@ -59,15 +59,9 @@
         main.deleteTodo = function(todo) {
             TodoModel.todoList.forEach(function(item, i) {
                 if (item.id === todo.id) {
-                    console.log('Удаляем ', TodoModel.todoList[i]);
                     delete TodoModel.todoList[i];
                 }
             });
-        };
-
-        main.readTodo = function(todo) {
-            main.todo = todo;
-            main.todo.date = $filter('date')(todo.date, "dd.MM.yyyy");
         };
 
         main.openUpdateTodoForm = function(todo) {
@@ -80,10 +74,17 @@
             $('#updateTodoForm').modal('hide');
         };
 
+        main.readTodo = function(todo) {
+            main.todo = todo;
+            main.todo.date = $filter('date')(todo.date, "dd.MM.yyyy");
+        };
+
         main.toggleCompletedTodo = function(todo) {
-            console.log(todo);
+
             if (todo)
                 todo.completed = (todo.completed) ? false : true;
+            console.log(main.todoList);
+
         };
 
         main.order = function(predicate) {
@@ -96,6 +97,14 @@
             return (!main.reverse && main.predicate == predicate);
         };
 
+        main.clearCompleted = function() {
+            TodoModel.todoList.forEach(function(todo) {
+                if (todo.completed) {
+                    console.log(todo);
+                    main.deleteTodo(todo);
+                }
+            });
+        };
     });
 
     app.directive('todoslist', function() {
