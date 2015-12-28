@@ -1,24 +1,29 @@
 'use strict';
+//Set up
 let koa = require('koa'),
-    favicon = require('koa-favicon'),
-    app = koa(),
-    db = {
-        name: "yat",
-        user: "yat",
-        password: "Ydha&26Ol!#",
+    serve = require('koa-static'),
+    db = require('./config/db'),
+    log = console.log,
+    logger = require('koa-logger'),
+    mongoose = require('mongoose'),
+    app = koa();
 
-    };
-db.url = "mongodb://" + db.name + ":" + db.password + "!#@ds047114.mongolab.com:47114/yat";
+//Connect to Db
+mongoose.connect(db.url);
 
-//Favicon
-app.use(favicon(__dirname + '/public/favicon.ico'));
-
-// response
-app.use(function*() {
-
-    console.log('Request: ', this.request);
-    this.body = "Hello world";
-
+let cnct = mongoose.connection;
+cnct.on('error', console.error.bind(console, 'connection error:'));
+cnct.once('open', function() {
+    log('Connected');
 });
+
+//Logger
+app.use(logger());
+
+//Static
+app.use(serve('client'));
+
+//Router
+require('./routes')(app);
 
 app.listen(1337);
