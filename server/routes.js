@@ -6,8 +6,7 @@ let Todo = require('./config/models'),
 module.exports = function(app) {
     //Return all todos
     router.get('/api/todos', function*() {
-        this.body = yield Todo.find();
-
+        this.body = yield Todo.find({});
     });
 
     // create todo and send back all todos after creation
