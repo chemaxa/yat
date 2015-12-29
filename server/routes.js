@@ -12,7 +12,6 @@ module.exports = function(app) {
 
     // create todo and send back all todos after creation
     router.post('/api/todos', koaBody, function*() {
-
         let todo = new Todo({
             name: this.request.body.name,
             description: this.request.body.description,
@@ -32,23 +31,30 @@ module.exports = function(app) {
     //read todo
     router.get('/api/todos/:id', function*() {
         try {
-            let todo = yield Todo.find({
-                _id: this.params.id
+            this.body = yield Todo.find({
+                _id: this.params.id.split(',')
             });
-            this.body = todo;
         } catch (e) {
             this.body = e.message;
         }
     });
 
     // update todo
-    router.put('/api/todos/:id', function*() {
+    router.put('/api/todos/:id', koaBody, function*() {
         console.log('This: ', this.params.id);
+        console.log(this.request.body);
         try {
-            let todo = yield Todo.find({
+            let todo = yield Todo.update({
+                _id: this.params.id
+            }, {
+                name: this.request.body.name,
+                description: this.request.body.description,
+                completed: this.request.body.completed,
+                date: this.request.body.date
+            });
+            this.body = yield Todo.find({
                 _id: this.params.id
             });
-            this.body = todo;
         } catch (e) {
             this.body = e.message;
         }

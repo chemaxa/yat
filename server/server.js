@@ -10,11 +10,10 @@ let koa = require('koa'),
 
 //Connect to Db
 mongoose.connect(db.url);
-
 let cnct = mongoose.connection;
 cnct.on('error', console.error.bind(console, 'connection error:'));
 cnct.once('open', function() {
-    log('Connected');
+    log('Connected to Db');
 });
 
 //Logger
@@ -27,3 +26,11 @@ app.use(serve('client'));
 require('./routes')(app);
 
 app.listen(1337);
+
+// If the Node process ends, close the Mongoose connection 
+process.on('SIGINT', function() {
+    mongoose.connection.close(function() {
+        console.log('Mongoose default connection disconnected through app termination');
+        process.exit(0);
+    });
+});
