@@ -80,11 +80,9 @@
         };
 
         main.toggleCompletedTodo = function(todo) {
-
             if (todo)
                 todo.completed = (todo.completed) ? false : true;
             console.log(main.todoList);
-
         };
 
         main.order = function(predicate) {

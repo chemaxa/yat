@@ -25,11 +25,13 @@ let todoSchema = new mongoose.Schema({
     }
 });
 let Todo = mongoose.model('Todo', todoSchema);
+/*//Create Todo
 let exampleTodo = new Todo({
     name: 'Second Todo',
     description: 'Lets go controller with Angular',
     completed: false
 });
+//Save Todo to Db
 exampleTodo.save(function(err) {
     if (err) {
         console.error(err);
@@ -38,8 +40,8 @@ exampleTodo.save(function(err) {
     }
 });
 console.log(exampleTodo);
-
+//Find all todos in Db
 Todo.find({}, function(err, todo) {
     console.log(todo);
-})
+})*/
 module.exports = Todo;

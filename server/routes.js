@@ -1,7 +1,8 @@
 'use strict';
 let Todo = require('./config/models'),
     logger = require('koa-logger'),
-    router = require('koa-router')();
+    router = require('koa-router')(),
+    koaBody = require('koa-body')();
 
 module.exports = function(app) {
     //Return all todos
@@ -10,19 +11,36 @@ module.exports = function(app) {
     });
 
     // create todo and send back all todos after creation
-    router.post('/api/todos', function*() {
-        this.type = 'json';
-        this.body = JSON.stringify({
-            "id": "123",
-            "string": "Stroka"
-        });
-        this.body = "Hello";
-        // create a todo, information comes from AJAX request from Angular
-        /*this.body = yield Todo.insert({
-            text: req.body.text,
-            done: false
-        });*/
+    router.post('/api/todos', koaBody, function*() {
 
+        console.log('Body: ', this.request.body);
+
+        let todo = new Todo({
+            name: this.request.body.name,
+            description: this.request.body.description,
+            completed: this.request.body.completed,
+            date: this.request.body.date
+        });
+        try {
+            yield todo.save();
+            this.body = yield Todo.find({});
+        } catch (e) {
+            console.log('Error: ', e);
+            this.body = e.message;
+        }
+    });
+
+    // delete a todo
+    router.del('/api/todos/:id', function*() {
+        console.log('This: ', this.params.id);
+        try {
+            let todo = yield Todo.remove({
+                _id: this.params.id
+            });
+            this.body = todo;
+        } catch (e) {
+            this.body = e.message;
+        }
 
     });
 
