@@ -21,6 +21,7 @@ module.exports = function(app) {
             completed: this.request.body.completed,
             date: this.request.body.date
         });
+
         try {
             yield todo.save();
             this.body = yield Todo.find({});
@@ -30,7 +31,32 @@ module.exports = function(app) {
         }
     });
 
-    // delete a todo
+    //read todo
+    router.get('/api/todos/:id', function*() {
+        try {
+            let todo = yield Todo.find({
+                _id: this.params.id
+            });
+            this.body = todo;
+        } catch (e) {
+            this.body = e.message;
+        }
+    });
+
+    // update todo
+    router.put('/api/todos/:id', function*() {
+        console.log('This: ', this.params.id);
+        try {
+            let todo = yield Todo.find({
+                _id: this.params.id
+            });
+            this.body = todo;
+        } catch (e) {
+            this.body = e.message;
+        }
+    });
+
+    // delete  todo
     router.del('/api/todos/:id', function*() {
         console.log('This: ', this.params.id);
         try {
@@ -41,8 +67,6 @@ module.exports = function(app) {
         } catch (e) {
             this.body = e.message;
         }
-
     });
-
     app.use(router.routes());
 };
