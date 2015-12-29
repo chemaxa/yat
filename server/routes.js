@@ -13,8 +13,6 @@ module.exports = function(app) {
     // create todo and send back all todos after creation
     router.post('/api/todos', koaBody, function*() {
 
-        console.log('Body: ', this.request.body);
-
         let todo = new Todo({
             name: this.request.body.name,
             description: this.request.body.description,
@@ -58,15 +56,17 @@ module.exports = function(app) {
 
     // delete  todo
     router.del('/api/todos/:id', function*() {
-        console.log('This: ', this.params.id);
         try {
             let todo = yield Todo.remove({
-                _id: this.params.id
+                _id: {
+                    $in: this.params.id.split(',')
+                }
             });
             this.body = todo;
         } catch (e) {
             this.body = e.message;
         }
     });
+
     app.use(router.routes());
 };
