@@ -10,6 +10,17 @@ module.exports = function(app) {
         this.body = yield Todo.find({});
     });
 
+    //Fetch todo by Id
+    router.get('/api/todos/:id', function*() {
+        try {
+            this.body = yield Todo.find({
+                _id: this.params.id.split(',')
+            });
+        } catch (e) {
+            this.body = e.message;
+        }
+    });
+
     // create todo and send back all todos after creation
     router.post('/api/todos', koaBody, function*() {
         let todo = new Todo({
@@ -28,16 +39,6 @@ module.exports = function(app) {
         }
     });
 
-    //read todo
-    router.get('/api/todos/:id', function*() {
-        try {
-            this.body = yield Todo.find({
-                _id: this.params.id.split(',')
-            });
-        } catch (e) {
-            this.body = e.message;
-        }
-    });
 
     // update todo
     router.put('/api/todos/:id', koaBody, function*() {
@@ -52,9 +53,7 @@ module.exports = function(app) {
                 completed: this.request.body.completed,
                 date: this.request.body.date
             });
-            this.body = yield Todo.find({
-                _id: this.params.id
-            });
+            this.body = yield Todo.find({});
         } catch (e) {
             this.body = e.message;
         }
@@ -68,7 +67,8 @@ module.exports = function(app) {
                     $in: this.params.id.split(',')
                 }
             });
-            this.body = todo;
+            //Return new todolist
+            this.body = yield Todo.find({});
         } catch (e) {
             this.body = e.message;
         }

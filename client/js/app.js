@@ -1,33 +1,50 @@
 !(function() {
     var app = angular.module('yat', []);
 
-    app.service('TodoModel', function() {
+    app.service('TodoModel', function($http) {
         var model = this;
-        model.todoList = [{
+
+        model.all = function() {
+            return $http.get('/api/todos').then((response) => {
+                return response.data;
+            });
+        };
+        model.fetchById = function(id) {
+            return $http.get('/api/todos/' + id).then((response) => {
+                return response.data;
+            });
+        };
+        model.create = function(data) {
+            return $http.post('/api/todos', data).then((response) => {
+                return response.data;
+            });
+        };
+        model.update = function(todo) {
+            return $http.put('/api/todos/' + todo._id, todo).then((response) => {
+                return response.data;
+            });
+        };
+        model.delete = function(id) {
+            return $http.delete('/api/todos/' + id).then((response) => {
+                return response.data;
+            });
+        };
+        /*model.todoList = [{
             id: 2,
             name: 'First Todo',
             description: 'Start with Angular',
             date: new Date(2015, 2, 1, 0, 0, 0, 0),
             completed: true
-        }, {
-            id: 1,
-            name: 'Second Todo',
-            description: 'Lets go controller with Angular',
-            date: new Date(2015, 1, 1, 0, 0, 0, 0),
-            completed: false
-        }, {
-            id: 3,
-            name: 'Third Todo',
-            description: 'Testing with Angular',
-            date: new Date(2015, 0, 1, 0, 0, 0, 0),
-            completed: true
-        }, ];
+        } ];*/
 
     });
 
     app.controller('MainController', function(TodoModel, $filter) {
         var main = this;
-        main.todoList = TodoModel.todoList;
+
+        TodoModel.all().then((data) => {
+            main.todoList = data;
+        });
 
         main.predicate = 'date';
         main.reverse = false;
@@ -43,8 +60,6 @@
 
         main.createTodo = function(todo) {
             todo.completed = false;
-            //Get last element Id & increment it
-            todo.id = (TodoModel.todoList.slice(-1)[0]) ? TodoModel.todoList.slice(-1)[0].id + 1 : 0;
 
             var yyyy = todo.date.split('.')[2],
                 mm = todo.date.split('.')[1],
@@ -52,15 +67,17 @@
 
             todo.date = new Date(yyyy, mm - 1, dd, 0, 0, 0, 0);
 
-            TodoModel.todoList.push(todo);
+            TodoModel.create(todo).then((data) => {
+                main.todoList = data;
+            });
+
             main.todo = {};
         };
 
         main.deleteTodo = function(todo) {
-            TodoModel.todoList.forEach(function(item, i) {
-                if (item.id === todo.id) {
-                    delete TodoModel.todoList[i];
-                }
+            console.log(todo);
+            TodoModel.delete(todo._id).then((data) => {
+                main.todoList = data;
             });
         };
 
@@ -70,6 +87,9 @@
         };
 
         main.closeUpdateTodoForm = function(todo) {
+            TodoModel.update(todo).then((data) => {
+                main.todoList = data;
+            });
             main.todo = {};
             $('#updateTodoForm').modal('hide');
         };
@@ -80,15 +100,15 @@
         };
 
         main.toggleCompletedTodo = function(todo) {
-            if (todo)
-                todo.completed = (todo.completed) ? false : true;
-            console.log(main.todoList);
+            todo.completed = (todo.completed) ? false : true;
+            TodoModel.update(todo).then((data) => {
+                main.todoList = data;
+            });
         };
 
         main.order = function(predicate) {
             main.reverse = (main.predicate === predicate) ? !main.reverse : false;
             main.predicate = predicate;
-            console.log(main);
         };
 
         main.isSortBy = function(predicate) {
@@ -96,7 +116,7 @@
         };
 
         main.clearCompleted = function() {
-            TodoModel.todoList.forEach(function(todo) {
+            main.todoList.forEach(function(todo) {
                 if (todo.completed) {
                     console.log(todo);
                     main.deleteTodo(todo);
@@ -105,7 +125,7 @@
         };
     });
 
-    app.directive('todoslist', function() {
+    app.directive('todoslist', function(TodoModel) {
         return {
             restrict: 'E',
             controller: 'MainController',
