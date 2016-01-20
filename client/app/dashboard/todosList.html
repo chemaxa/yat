@@ -1,25 +1,25 @@
 <ul class="list-group">
-    <li class="list-group-item clearfix " ng-class="{'list-group-item-warning' : !todo.completed, 'list-group-item-success' : todo.completed }" ng-show="todo.name" ng-repeat="todo in main.todoList | orderBy:main.predicate:main.reverse track by $index">
-        <button type="button" class="close" aria-label="Close" ng-click="main.deleteTodo(todo)"><span aria-hidden="true">&times;</span></button>
+    <li class="list-group-item clearfix " ng-class="{'list-group-item-warning' : !todo.completed, 'list-group-item-success' : todo.completed }" ng-show="todo.name" ng-repeat="todo in todoCtrl.todoList | orderBy:todoCtrl.predicate:todoCtrl.reverse track by $index">
+        <button type="button" class="close" aria-label="Close" ng-click="todoCtrl.deleteTodo(todo)"><span aria-hidden="true">&times;</span></button>
         <h4 class="list-group-item-heading">{{todo.name}}</h4>
         <p class="list-group-item-text">{{todo.description}}</p>
         <span class="label label-default">{{todo.date | date:'dd.MM.yyyy'}}</span>
-        <button type="button" class="btn btn-default btn-xs" aria-label="Left Align" data-toggle="modal" ng-click="main.openUpdateTodoForm(todo)">
+        <button type="button" class="btn btn-default btn-xs" aria-label="Left Align" data-toggle="modal" ng-click="todoCtrl.openUpdateTodoForm(todo)">
             <span>Edit todo</span>
             <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
         </button>
-        <button type="button" class="btn btn-success pull-right btn-xs" ng-click="main.toggleCompletedTodo(todo)">Set {{todo.completed ? 'uncompleted' : 'completed'}}</button>
+        <button type="button" class="btn btn-success pull-right btn-xs" ng-click="todoCtrl.toggleCompletedTodo(todo)">Set {{todo.completed ? 'uncompleted' : 'completed'}}</button>
     </li>
 </ul>
-<button type="button" class="btn btn-default" aria-label="Left Align" ng-click="main.order('name')">
+<button type="button" class="btn btn-default" aria-label="Left Align" ng-click="todoCtrl.order('name')">
     <span>Sort by Name</span>
-    <span class="glyphicon glyphicon-sort-by-alphabet" ng-class="main.isSortBy('name') ? 'glyphicon-sort-by-alphabet': 'glyphicon-sort-by-alphabet-alt'" aria-hidden="true"></span>
+    <span class="glyphicon glyphicon-sort-by-alphabet" ng-class="todoCtrl.isSortBy('name') ? 'glyphicon-sort-by-alphabet': 'glyphicon-sort-by-alphabet-alt'" aria-hidden="true"></span>
 </button>
-<button type="button" class="btn btn-default" aria-label="Left Align" ng-click="main.order('date')">
+<button type="button" class="btn btn-default" aria-label="Left Align" ng-click="todoCtrl.order('date')">
     <span>Sort by Date</span>
-    <span class="glyphicon glyphicon-sort-by-order" ng-class="main.isSortBy('date') ? 'glyphicon-sort-by-order' : 'glyphicon-sort-by-order-alt'" aria-hidden="true"></span>
+    <span class="glyphicon glyphicon-sort-by-order" ng-class="todoCtrl.isSortBy('date') ? 'glyphicon-sort-by-order' : 'glyphicon-sort-by-order-alt'" aria-hidden="true"></span>
 </button>
-<button type="button" class="btn btn-default" aria-label="Left Align" ng-click="main.order('completed')">
+<button type="button" class="btn btn-default" aria-label="Left Align" ng-click="todoCtrl.order('completed')">
     <span>Sort by Status</span>
-    <span class="glyphicon glyphicon-sort-by-attributes" ng-class="main.isSortBy('completed') ? 'glyphicon-sort-by-attributes': 'glyphicon-sort-by-attributes-alt'" aria-hidden="true"></span>
+    <span class="glyphicon glyphicon-sort-by-attributes" ng-class="todoCtrl.isSortBy('completed') ? 'glyphicon-sort-by-attributes': 'glyphicon-sort-by-attributes-alt'" aria-hidden="true"></span>
 </button>
