@@ -4,14 +4,16 @@ let Todo = require('./config/models'),
     router = require('koa-router')(),
     koaBody = require('koa-body')();
 
-module.exports = function(app) {
+module.exports = function (app) {
+    // Redirect to main page from all routes
+
     //Return all todos
-    router.get('/api/todos', function*() {
+    router.get('/api/todos', function* () {
         this.body = yield Todo.find({});
     });
 
     //Fetch todo by Id
-    router.get('/api/todos/:id', function*() {
+    router.get('/api/todos/:id', function* () {
         try {
             this.body = yield Todo.find({
                 _id: this.params.id.split(',')
@@ -22,7 +24,7 @@ module.exports = function(app) {
     });
 
     // create todo and send back all todos after creation
-    router.post('/api/todos', koaBody, function*() {
+    router.post('/api/todos', koaBody, function* () {
         let todo = new Todo({
             name: this.request.body.name,
             description: this.request.body.description,
@@ -41,7 +43,7 @@ module.exports = function(app) {
 
 
     // update todo
-    router.put('/api/todos/:id', koaBody, function*() {
+    router.put('/api/todos/:id', koaBody, function* () {
         console.log('This: ', this.params.id);
         console.log(this.request.body);
         try {
@@ -60,7 +62,7 @@ module.exports = function(app) {
     });
 
     // delete  todo
-    router.del('/api/todos/:id', function*() {
+    router.del('/api/todos/:id', function* () {
         try {
             let todo = yield Todo.remove({
                 _id: {
@@ -73,6 +75,6 @@ module.exports = function(app) {
             this.body = e.message;
         }
     });
-
+    router.redirect('/*', '/');
     app.use(router.routes());
 };

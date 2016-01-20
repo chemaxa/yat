@@ -1,0 +1,25 @@
+<todosList></todosList>
+<div class="button__wrapper">
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" ng-click="main.openCreateTodoForm()">
+        Add new Todo
+    </button>
+    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" ng-click="main.clearCompleted()">
+        Clear completed
+    </button>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="createTodoForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <createtodoform></createtodoform>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="updateTodoForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <updatetodoform></updatetodoform>
+        </div>
+    </div>
+</div>
