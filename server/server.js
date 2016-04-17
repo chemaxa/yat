@@ -25,7 +25,7 @@ app.use(serve('client'));
 //Router
 require('./routes')(app);
 
-app.listen(1337);
+app.listen(process.env.PORT, process.env.IP);
 
 // If the Node process ends, close the Mongoose connection 
 process.on('SIGINT', function() {
