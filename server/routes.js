@@ -34,10 +34,17 @@ module.exports = function (app) {
 
         try {
             yield todo.save();
-            this.body = yield Todo.find({});
+            let todoList = yield Todo.find({});
+            this.body = {
+                status: 'success',
+                data: todoList
+            }
         } catch (e) {
             console.log('Error: ', e);
-            this.body = e.message;
+            this.body = {
+                status: 'error',
+                data: e.message
+            }
         }
     });
 

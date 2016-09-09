@@ -67,7 +67,9 @@
             todo.date = new Date(yyyy, mm - 1, dd, 0, 0, 0, 0);
 
             TodoModel.create(todo).then((data) => {
-                todoCtrl.todoList = data;
+                if(data.status == 'success')
+                    todoCtrl.todoList = data;
+                console.log(data);
             });
 
             todoCtrl.todo = {};
@@ -123,8 +125,5 @@
             });
         };
     }
-
-    angular.module('Yat')
-
 
 })();
