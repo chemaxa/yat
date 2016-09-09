@@ -24,8 +24,10 @@ app.use(serve('client'));
 
 //Router
 require('./routes')(app);
-
-app.listen(process.env.PORT, process.env.IP);
+let port = process.env.PORT || 3000;
+let host = process.env.IP || "localhost";
+app.listen(port,host);
+console.log("Server opened on: ",host,":",port);
 
 // If the Node process ends, close the Mongoose connection 
 process.on('SIGINT', function() {
